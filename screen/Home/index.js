@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Alert,ActivityIndicator} from 'react-native';
+import {View, Text, Alert, ActivityIndicator} from 'react-native';
 import Categorys from './components/Categorys';
 import Header from '../shared/Header';
 import Products from './components/Products';
@@ -9,11 +9,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Home({navigation}) {
   const [category, setCategory] = useState();
   const [product, setProduct] = useState();
-  const [loader,setLoader] = useState(true);
+  const [loader, setLoader] = useState(true);
   useEffect(() => {
     fetchCategories();
     fetchProducts();
-    setLoader(false)
+    setLoader(false);
   }, []);
   fetchCategories = async () => {
     const response = await fetch(`${url}/categories`, {
@@ -61,7 +61,13 @@ export default function Home({navigation}) {
     } catch (e) {
       console.log(e);
     }
-    data.push({name:item.name,id:item.id,price:item.price,quantity:1,image_url1:item.image_url1});
+    data.push({
+      name: item.name,
+      id: item.id,
+      price: item.price,
+      quantity: 1,
+      image_url1: item.image_url1,
+    });
 
     try {
       const jsonValue = JSON.stringify(data);
@@ -93,13 +99,13 @@ export default function Home({navigation}) {
   const viewCart = () => {
     navigation.navigate('Cart');
   };
-  if(loader){
-    return(
-      <View style={{flex:1}}>
-         <ActivityIndicator size="large" color="#00ff00" />
+  if (loader) {
+    return (
+      <View style={{flex: 1}}>
+        <ActivityIndicator size="large" color="#00ff00" />
       </View>
-    )
-  }else{
+    );
+  } else {
     return (
       <View>
         <Header title="AmarDokan" />
