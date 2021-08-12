@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react'
-import { View , Text,TouchableOpacity} from 'react-native'
-import Header from '../shared/Header'
-import Products from './components/Products'
+import React, {useEffect} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
+import Header from '../shared/Header';
+import Products from './components/Products';
 
-export default function Cart () {
+export default function Cart({navigation}) {
 
-    
-    return(
-        <View>
-            <Header title="Cart" />
-            <Products />       
-        </View>
-    )
+    const goBack = () => {
+        navigation.replace('Home');
+    }
+  return (
+    <View>
+      <Header title="Cart" icon="arrow-back" goBack={goBack} />
+      <Products navigation={navigation} />
+    </View>
+  );
 }

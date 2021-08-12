@@ -40,12 +40,3 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 });
-
-// {/* <View style={{marginTop:10,flexDirection:'row'}} >
-//                 {/* Categories */}
-//                 <Category title="Fashion" />
-//                 <Category title="Baby" />
-//                 <Category title="Women" />
-//                 <Category title="Mobile" />
-//                 <Category title="Electronic" />
-//             </View> */}

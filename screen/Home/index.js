@@ -1,20 +1,35 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, Alert, ActivityIndicator} from 'react-native';
 import Categorys from './components/Categorys';
 import Header from '../shared/Header';
 import Products from './components/Products';
 import {url} from '../../server/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {useFocusEffect} from '@react-navigation/native';
 export default function Home({navigation}) {
   const [category, setCategory] = useState();
   const [product, setProduct] = useState();
   const [loader, setLoader] = useState(true);
+  const [key, setKey] = useState('0');
+  let controller = new AbortController();
+
+  // useFocusEffect(
+  //    useCallback(() => {
+
+  //     return () => {
+
+  //     };
+  //   }, [])
+  // );
   useEffect(() => {
     fetchCategories();
     fetchProducts();
     setLoader(false);
   }, []);
+  // const forceUpdate =()=>{
+  //   setKey(Math.random)
+  // }
+
   fetchCategories = async () => {
     const response = await fetch(`${url}/categories`, {
       method: 'GET',
@@ -75,30 +90,12 @@ export default function Home({navigation}) {
     } catch (e) {
       console.log(e);
     }
-    // try {
-    //   var value = await AsyncStorage.getItem('cart');
-    //   if (value !== null) {
-    //     value = JSON.parse(value);
-    //     value.map(item => {
-    //       console.log(item.name);
-    //       console.log(item.id);
-    //       console.log(item.description);
-    //       console.log(item.price);
-    //       console.log('---');
-    //     });
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
-    // //   console.log(data);
-    // //   get cart data form async storage
-
-    // console.log('===================================');
     setCart(false);
   };
   const viewCart = () => {
-    navigation.navigate('Cart');
+    navigation.replace('Cart');
   };
+
   if (loader) {
     return (
       <View style={{flex: 1}}>
@@ -108,7 +105,7 @@ export default function Home({navigation}) {
   } else {
     return (
       <View>
-        <Header title="AmarDokan" />
+        <Header title="AmarDokan" icon="" goBack="" />
         <Categorys category={category} />
         <Products product={product} addToCart={addToCart} viewCart={viewCart} />
       </View>

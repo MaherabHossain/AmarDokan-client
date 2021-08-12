@@ -11,13 +11,13 @@ import {
 import Card from './Card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Products() {
+export default function Products({navigation}) {
   const [product, setProduct] = useState([]);
-  const [key,setKey] = useState(0);
+  const [key, setKey] = useState(0);
   useEffect(() => {
-    fetchData();
+    fetchCartProduct();
   }, []);
-  const fetchData = async () => {
+  const fetchCartProduct = async () => {
     try {
       var value = await AsyncStorage.getItem('cart');
       if (value !== null) {
@@ -43,8 +43,6 @@ export default function Products() {
     setProduct(data);
     jsonData = JSON.stringify(data);
     await AsyncStorage.setItem('cart', jsonData);
-    
-    // console.log(indexP)
   };
   const incrementQty = async index => {
     product[index].quantity = product[index].quantity + 1;
@@ -53,21 +51,19 @@ export default function Products() {
     console.log(product);
     const jsonValue = JSON.stringify(product);
     await AsyncStorage.setItem('cart', jsonValue);
-    setKey(Math.random)
+    setKey(Math.random);
   };
   const decrimentQty = async index => {
     if (product[index].quantity == 1) {
       Alert.alert('you must be order at list item');
     }
-
-    // console.log()
     product[index].quantity = product[index].quantity - 1;
     const tempProduct = product;
     console.log(product);
     const jsonValue = JSON.stringify(product);
     await AsyncStorage.setItem('cart', jsonValue);
     setProduct(tempProduct);
-    setKey(Math.random)
+    setKey(Math.random);
   };
 
   return (
@@ -121,7 +117,8 @@ export default function Products() {
           alignItems: 'center',
           left: '25%',
           marginBottom: 300,
-        }}>
+        }}
+        onPress={() => navigation.replace('PlaceOrder')}>
         <Text>Cheackout</Text>
       </TouchableOpacity>
     </ScrollView>
